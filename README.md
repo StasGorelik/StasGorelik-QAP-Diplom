@@ -1,0 +1,2 @@
+# StasGorelik-QAP-Diplom
+Diplom
