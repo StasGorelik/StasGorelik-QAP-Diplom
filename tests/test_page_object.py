@@ -93,18 +93,4 @@ def test_quit(page: Page):
     dashboard_page.user_section_is_visible()
     dashboard_page.user_section_click()
     dashboard_page.header_logout_button_click()
-
-
-# @pytest.mark.only2
-# def test_boards_page_opened(page: Page):
-#     authorization = LoginPage(page)
-#     authorization.open()
-#     authorization.verify_that_empty_page_opened()
-#     authorization.autorization_fill_out_of_form()
-
-#     authorization.autorization_submit_button_click()
-
-#     boards_page = BoardsPage(page)
-#     boards_page.open()
-
-#     boards_page.verify_that_empty_page_opened()
+    
