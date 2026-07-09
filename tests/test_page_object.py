@@ -4,6 +4,8 @@ from pages.login_page import LoginPage
 from pages.dashboard_page import DashboardPage
 from pages.boards_page import BoardsPage
 from pages.tasks_page import TasksPage
+from pages.admin_board_page import AdminPage
+from pages.register_page import RegisterPage
 
 
 @pytest.mark.only1
@@ -93,4 +95,48 @@ def test_quit(page: Page):
     dashboard_page.user_section_is_visible()
     dashboard_page.user_section_click()
     dashboard_page.header_logout_button_click()
-    
+
+
+@pytest.mark.admin1
+def test_admin_panel(page: Page):
+    authorization = LoginPage(page)
+    authorization.open()
+    authorization.verify_that_empty_page_opened()
+    authorization.autorization_admin_fill_out_of_form()
+    authorization.autorization_submit_button_click()
+
+    dashboard_page = DashboardPage(page)
+    dashboard_page.sidebar_admin_link_click()
+
+    admin_page = AdminPage(page)
+    admin_page.verify_that_empty_page_opened()
+
+
+@pytest.mark.admin2
+def test_header_user_dropdown_name(page: Page):
+    authorization = LoginPage(page)
+    authorization.open()
+    authorization.verify_that_empty_page_opened()
+    authorization.autorization_admin_fill_out_of_form()
+    authorization.autorization_submit_button_click()
+
+    dashboard_page = DashboardPage(page)
+    dashboard_page.sidebar_admin_link_click()
+
+    admin_page = AdminPage(page)
+    admin_page.verify_that_empty_page_opened()
+
+    admin_page.header_user_info_click()
+    admin_page.header_user_dropdown_name_is_visible()
+
+
+@pytest.mark.register
+def test_register_page_opened(page: Page):
+    authorization = LoginPage(page)
+    authorization.open()
+    authorization.verify_that_empty_page_opened()
+    authorization.auth_form_link_click()
+
+    register_page = RegisterPage(page)
+
+    register_page.verify_that_empty_page_opened()

@@ -5,27 +5,30 @@ import requests
 
 class HttpClient:
     DOMAIN = "http://localhost:8000"
-    
+
     def make_request(self, method, url, body: dict | None = None, headers: dict | None = None):
-        response = requests.request(method, self.DOMAIN + url, data = json.dumps(body), headers = headers)
+        response = requests.request(
+            method, self.DOMAIN + url, data=json.dumps(body), headers=headers)
 
         try:
-            if response.status_code==204:
-                return None
-            elif response.status_code!=204:
-                response_json = response.json()
-                return response_json
+            response.raise_for_status()
+            # Конкретно с этим пришлось советоваться с Игорем Игоревичем для решения этого вопроса, моих знаний тут вообще никак не хватает
+            if response.status_code == 204 or not response.text.strip():
+                return {}
+
+            response_json = response.json()
+            return response_json
         except requests.exceptions.HTTPError:
             return None
 
     def get(self, url, headers: dict | None = None):
         return self.make_request(method='GET', url=url, headers=headers)
-    
+
     def post(self, url, body: dict | None = None, headers: dict | None = None):
         return self.make_request(method='POST', url=url, body=body, headers=headers)
-    
+
     def put(self, url, body: dict | None = None, headers: dict | None = None):
         return self.make_request(method='PUT', url=url, body=body, headers=headers)
-    
-    def delete(self, url,headers: dict | None = None):
-        return self.make_request(method='DELETE', url=url, headers=headers)    
+
+    def delete(self, url, headers: dict | None = None):
+        return self.make_request(method='DELETE', url=url, headers=headers)

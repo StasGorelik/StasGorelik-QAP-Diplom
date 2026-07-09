@@ -16,12 +16,19 @@ class DashboardPage(BasePage):
         self.header_username = self.page.locator('[data-qa="header-username"]').filter(
             has_text="bob_user"
         )
-        self.header_user_dropdown_info = self.page.locator(".header-user-dropdown-info")
+        self.header_user_dropdown_info = self.page.locator(
+            ".header-user-dropdown-info")
         self.header_logout_button = self.page.locator(
             '[data-qa="header-logout-button"]'
         )
-        self.sidebar_boards_link = self.page.locator('[data-qa="sidebar-boards-link"]')
-        self.sidebar_tasks_link = self.page.locator('[data-qa="sidebar-tasks-link"]')
+        self.sidebar_boards_link = self.page.locator(
+            '[data-qa="sidebar-boards-link"]')
+        self.sidebar_tasks_link = self.page.locator(
+            '[data-qa="sidebar-tasks-link"]')
+        self.sidebar_admin_link = self.page.locator(
+            '[data-qa="sidebar-admin-link"]')
+        self.toast_message = self.page.locator(
+            '.toast-message').filter(has_text="Регистрация успешна!")
 
     def open(self):
         self.goto(self.path)
@@ -48,3 +55,9 @@ class DashboardPage(BasePage):
 
     def sidebar_tasks_link_click(self):
         self.sidebar_tasks_link.click()
+
+    def sidebar_admin_link_click(self):
+        self.sidebar_admin_link.click()
+
+    def toast_message_verification_is_visible(self):
+        expect(self.toast_message).to_be_visible()
