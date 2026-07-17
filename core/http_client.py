@@ -12,7 +12,6 @@ class HttpClient:
 
         try:
             response.raise_for_status()
-            # Конкретно с этим пришлось советоваться с Игорем Игоревичем для решения этого вопроса, моих знаний тут вообще никак не хватает
             if response.status_code == 204 or not response.text.strip():
                 return {}
 
