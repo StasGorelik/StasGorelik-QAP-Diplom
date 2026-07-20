@@ -30,7 +30,7 @@ class BoardService(HttpClient):
         headers = {
             "accept": "application/json"
         }
-        return self.get(f"{self.boards_url}public/{board_id}", headers=headers)
+        return self.get(f"{self.boards_url}/public/{board_id}", headers=headers)
 
     def get_board_by_id(self, board_id, access_token):
         headers = {

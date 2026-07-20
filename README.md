@@ -17,3 +17,5 @@ Diplom
 
    удалить созданный образ
    docker rmi my-tests
+
+   # allure serve .allure-results 

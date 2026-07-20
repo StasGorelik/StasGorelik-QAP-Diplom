@@ -1,11 +1,12 @@
 import pytest
-
+import allure
 
 from services.auth_service import AuthServise
 from services.board_service import BoardService
 from services.tasks_service import TaskService
 
 
+@allure.title("Поиск задаи")
 @pytest.mark.task1
 def test_search_tasks():
     login_admin = AuthServise().login('admin@example.com', 'admin123')
@@ -28,6 +29,7 @@ def test_search_tasks():
 # представим, что тайтл таски должно быть только строкой и размерами от 6 до 10 символов и только строкой
 
 
+@allure.title("Создание задачи")
 @pytest.mark.parametrize("title",
                          ["APITE", "APITES", "APITEST", "ApitestsP",
                           "ApitestsPy", "ApitestsPyt", 123456, "!&%$^#@!"])
@@ -45,6 +47,7 @@ def test_create_tasks(title):
     assert create_task.title == title
 
 
+@allure.title("Удаление задачи")
 @pytest.mark.task3
 def test_delete_tasks():
     login_admin = AuthServise().login('admin@example.com', 'admin123')
@@ -64,6 +67,7 @@ def test_delete_tasks():
     assert delete_task == {}
 
 
+@allure.title("Обновление названия и описания задачи")
 @pytest.mark.task4
 def test_update_tasks():
     login_admin = AuthServise().login('admin@example.com', 'admin123')
@@ -74,19 +78,22 @@ def test_update_tasks():
                                             board_id=create_board.id, access_token=login_admin.access_token)
 
     update_task = TaskService().update_task(title="Updatet_Task", description="DESCRIPTION AFTER UPDATE",
-                                            board_id=create_board.id, task_id=create_task.id, access_token=login_admin.access_token)
+                                            board_id=create_board.id, task_id=create_task.id,
+                                            access_token=login_admin.access_token)
 
     assert update_task.title == "Updatet_Task"
     assert update_task.description == "DESCRIPTION AFTER UPDATE"
 
 
+@allure.title("Перемещение задачи на другую доску")
 @pytest.mark.task5
 def test_move_task_at_another_board():
     login_admin = AuthServise().login('admin@example.com', 'admin123')
     create_board = BoardService().create_board(title="Testing",
                                                description="Testing board", access_token=login_admin.access_token)
     create_board_target = BoardService().create_board(title="Testing",
-                                                      description="Testing board", access_token=login_admin.access_token)
+                                                      description="Testing board",
+                                                      access_token=login_admin.access_token)
 
     create_task = TaskService().create_task(title="APIS", description="TASK FOR API",
                                             board_id=create_board.id, access_token=login_admin.access_token)
@@ -99,6 +106,7 @@ def test_move_task_at_another_board():
     assert remove_task_to_another_board.board_id == create_board_target.id
 
 
+@allure.title("Изменения статуса задачи")
 @pytest.mark.task6
 def test_task_status_is_change():
     login_admin = AuthServise().login('admin@example.com', 'admin123')
@@ -115,6 +123,7 @@ def test_task_status_is_change():
     assert change_the_task_status.status == "in_progress"
 
 
+@allure.title("Апгрейд статуса задачи")
 @pytest.mark.task7
 def test_task_status_is_upgrade():
     login_admin = AuthServise().login('admin@example.com', 'admin123')

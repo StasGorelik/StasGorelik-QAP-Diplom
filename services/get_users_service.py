@@ -13,7 +13,7 @@ class GetUserService(HttpClient):
             "accept": "application/json"
         }
         users = self.get(
-            f"{self.users_url}/?skip=0&limit=100", headers=headers)
+            f"{self.users_url}/?skip=0&limit=200", headers=headers)
 
         users_objects = [UserResponse(**user) for user in users]
         return users_objects
