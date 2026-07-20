@@ -3,17 +3,19 @@ from playwright.sync_api import Page, expect
 
 
 class TasksPage(BasePage):
-    
+
     def __init__(self, page: Page):
         super().__init__(page)
         self.page = page
         self.path = "tasks"
 
-        self.tasks_page_title = self.page.locator('[data-qa="tasks-page-title"]')
-        self.tasks_filters = self.page.locator('[data-qa="tasks-filters"]')    
+        self.tasks_page_title = self.page.locator(
+            '[data-qa="tasks-page-title"]')
+        self.tasks_filters = self.page.locator('[data-qa="tasks-filters"]')
         self.admin_section_title = self.page.locator('.admin-section-title')
-        self.tasks_search_input = self.page.locator('[data-qa="tasks-search-input"]')
-    
+        self.tasks_search_input = self.page.locator(
+            '[data-qa="tasks-search-input"]')
+
     def open(self):
         self.goto(self.path)
 
